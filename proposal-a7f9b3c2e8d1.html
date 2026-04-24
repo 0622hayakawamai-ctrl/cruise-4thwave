@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<title>クルーズワールド.jp AIチャットボット ご提案資料 v1</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  background: #f4f6fa;
+  color: #1a1a2e;
+  line-height: 1.75;
+  font-size: 14px;
+}
+.wrapper { display: flex; max-width: 1400px; margin: 0 auto; }
+
+/* サイドバー目次 */
+.sidebar {
+  width: 260px;
+  background: #0a1628;
+  color: white;
+  padding: 28px 22px;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.sidebar h1 { font-size: 16px; font-weight: 800; line-height: 1.5; margin-bottom: 8px; color: #ffb088; }
+.sidebar .subtitle-side { font-size: 11px; opacity: 0.7; line-height: 1.6; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+.sidebar .toc-label { font-size: 10px; letter-spacing: 2px; opacity: 0.55; margin-bottom: 10px; text-transform: uppercase; }
+.sidebar nav a {
+  display: block;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-bottom: 3px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+.sidebar nav a:hover { background: rgba(255,255,255,0.08); border-left-color: #ff6b35; }
+.sidebar nav a .num { color: #ff6b35; font-weight: 800; margin-right: 8px; }
+.sidebar .meta-side { font-size: 11px; opacity: 0.6; margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.15); }
+
+/* メインコンテンツ */
+.main { flex: 1; padding: 0 50px 60px; background: white; }
+
+/* ヘッダー */
+.doc-header {
+  margin: 0 -50px 40px;
+  padding: 50px 50px 40px;
+  background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%);
+  color: white;
+}
+.doc-header .tag { font-size: 11px; letter-spacing: 3px; opacity: 0.7; text-transform: uppercase; margin-bottom: 10px; }
+.doc-header h1 { font-size: 28px; font-weight: 800; line-height: 1.45; margin-bottom: 12px; }
+.doc-header .lead { font-size: 14px; opacity: 0.85; line-height: 1.8; max-width: 720px; }
+.doc-header .meta { font-size: 12px; opacity: 0.7; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.15); }
+
+/* セクション */
+.section { margin-bottom: 50px; padding-top: 16px; }
+.section h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0a1628;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid #ff6b35;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section h2 .num {
+  background: #ff6b35;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a2a4a;
+  margin: 26px 0 12px;
+  padding-left: 12px;
+  border-left: 4px solid #1a2a4a;
+}
+.section h4 { font-size: 14px; font-weight: 700; color: #1a2a4a; margin: 18px 0 8px; }
+.section p { margin-bottom: 12px; line-height: 1.85; }
+
+/* イントロ */
+.intro-box {
+  background: #fff8ee;
+  border-left: 5px solid #ff6b35;
+  padding: 18px 22px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.intro-box strong { color: #e84a1c; }
+
+/* テーブル */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: 13px;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  border-radius: 8px;
+  overflow: hidden;
+}
+table th {
+  background: #1a2a4a;
+  color: white;
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #e6e9ef;
+  vertical-align: top;
+  line-height: 1.65;
+}
+table tr:nth-child(even) td { background: #f8f9fc; }
+table tr:last-child td { border-bottom: none; }
+table .ok { color: #10b981; font-weight: 700; text-align: center; }
+table .ng { color: #c5cdd8; text-align: center; }
+table .star { color: #ff6b35; font-weight: 800; text-align: center; }
+table .center { text-align: center; }
+
+/* タグ */
+.tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag.must { background: #e84a1c; color: white; }
+.tag.should { background: #ffb088; color: white; }
+.tag.nice { background: #c5cdd8; color: #1a2a4a; }
+.tag.tech { background: #8b5cf6; color: white; }
+.tag.data { background: #4fc3f7; color: white; }
+.tag.biz { background: #10b981; color: white; }
+
+/* 強調ボックス */
+.highlight-box {
+  background: linear-gradient(135deg, #fff5ef 0%, #ffe8dc 100%);
+  border: 1px solid #ffcbb3;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.highlight-box .label {
+  display: inline-block;
+  background: #ff6b35;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.highlight-box strong { color: #e84a1c; }
+
+.spec-box {
+  background: #f0f7ff;
+  border-left: 5px solid #4fc3f7;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-size: 13px;
+}
+.spec-box strong { color: #006994; }
+
+/* 提案カード */
+.proposal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 20px 0; }
+.proposal-card {
+  background: white;
+  border: 1px solid #e6e9ef;
+  border-radius: 12px;
+  padding: 22px;
+  border-top: 4px solid #ff6b35;
+  position: relative;
+}
+.proposal-card .num {
+  position: absolute;
+  top: -16px;
+  right: 18px;
+  background: #ff6b35;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-weight: 800;
+  font-size: 14px;
+}
+.proposal-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: #0a1628; }
+.proposal-card p { font-size: 13px; line-height: 1.75; color: #444; }
+
+/* チャットUI例 */
+.chat-preview {
+  background: #f8f9fc;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 360px;
+  margin: 14px 0;
+  border: 1px solid #e6e9ef;
+}
+.chat-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.65;
+  margin-bottom: 6px;
+  max-width: 88%;
+}
+.chat-bubble.bot { background: white; color: #1a1a2e; }
+.chat-bubble.user { background: linear-gradient(135deg, #ff6b35, #e84a1c); color: white; margin-left: auto; }
+
+/* リスト */
+.q-list { list-style: none; padding: 0; }
+.q-list li {
+  padding: 10px 14px 10px 36px;
+  position: relative;
+  background: #f8f9fc;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.q-list li::before { content: "▶"; position: absolute; left: 14px; top: 11px; color: #ff6b35; font-size: 10px; }
+.q-list li .sub { display: block; font-size: 11px; color: #666; margin-top: 4px; }
+
+.must-list { list-style: none; padding: 0; }
+.must-list li {
+  padding: 12px 14px 12px 44px;
+  position: relative;
+  background: linear-gradient(135deg, #fff5ef 0%, #ffe8dc 100%);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  border: 1px solid #ffcbb3;
+}
+.must-list li::before {
+  content: "★";
+  position: absolute;
+  left: 16px;
+  top: 11px;
+  color: #ff6b35;
+  font-size: 16px;
+  font-weight: 900;
+}
+.must-list li strong { color: #e84a1c; }
+
+/* 質問グリッド */
+.question-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.q-block {
+  background: #f8f9fc;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.q-block .q-num {
+  display: inline-block;
+  background: #ff6b35;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.q-block .q-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #0a1628; }
+.q-block .q-opt { font-size: 12px; line-height: 1.75; color: #444; }
+.q-block .q-opt span { color: #e84a1c; font-weight: 700; }
+
+/* タイプグリッド */
+.type-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 14px 0; }
+.type-card {
+  background: white;
+  border: 1px solid #e6e9ef;
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+  border-top: 3px solid #ff6b35;
+}
+.type-card .badge {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35, #e84a1c);
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 30px;
+  margin-bottom: 8px;
+}
+.type-card h5 { font-size: 13px; font-weight: 800; margin-bottom: 6px; color: #0a1628; }
+.type-card .desc { font-size: 11px; color: #666; line-height: 1.6; margin-bottom: 8px; }
+.type-card .ship { font-size: 10px; background: #f8f9fc; padding: 6px 4px; border-radius: 4px; color: #1a2a4a; line-height: 1.5; }
+
+/* リスクボックス */
+.risk-box {
+  background: #fef3f2;
+  border-left: 4px solid #e84a1c;
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.risk-box strong { color: #e84a1c; display: block; margin-bottom: 4px; font-size: 14px; }
+
+/* ステップフロー */
+.step-flow { display: flex; gap: 10px; margin: 14px 0; flex-wrap: wrap; }
+.step-flow .step {
+  flex: 1;
+  min-width: 140px;
+  background: #f8f9fc;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border-top: 3px solid #ff6b35;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.step-flow .step strong { display: block; color: #0a1628; margin-bottom: 4px; font-size: 13px; }
+
+/* 凡例 */
+.legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: #f0f2f6;
+  border-radius: 6px;
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+
+/* 印刷対応 */
+@media print {
+  .sidebar { display: none; }
+  body { background: white; }
+  .section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<aside class="sidebar">
+  <h1>クルーズワールド.jp<br>AIチャットボット<br>ご提案資料</h1>
+  <p class="subtitle-side">For 株式会社フォースウェーブ × 株式会社電脳ワークス</p>
+
+  <div class="toc-label">目次</div>
+  <nav>
+    <a href="#sec0" style="color: #ffb088;"><span class="num" style="color: #ffb088;">🔗</span>関連資料リンク</a>
+    <a href="#sec1"><span class="num">01</span>はじめに</a>
+    <a href="#sec2"><span class="num">02</span>全体設計（5ステージ）</a>
+    <a href="#sec3"><span class="num">03</span>技術選定とその根拠 ★</a>
+    <a href="#sec4"><span class="num">04</span>現状スコープと拡張提案</a>
+    <a href="#sec5"><span class="num">05</span>質問・タイプ設計詳細</a>
+    <a href="#sec6"><span class="num">06</span>確認いただきたいこと</a>
+    <a href="#sec7"><span class="num">07</span>必要なデータ・素材</a>
+    <a href="#sec8"><span class="num">08</span>リスクと対処</a>
+    <a href="#sec9"><span class="num">09</span>実装スケジュール</a>
+    <a href="#sec10"><span class="num">10</span>次のアクション</a>
+  </nav>
+
+  <div class="meta-side">
+    作成: 2026/04/24<br>
+    早川まい（電脳ワークス業務委託）
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="doc-header">
+  <div class="tag">For 株式会社フォースウェーブ × 株式会社電脳ワークス</div>
+  <h1>クルーズワールド.jp AIチャットボット<br>ご提案資料 <span style="color: #ffb088;">v1</span></h1>
+  <p class="lead">
+    4/23ミーティングを受けて作成した、設計・技術選定・打ち合わせ用ヒアリング項目の統合資料です。<br>
+    田中様が南社長との打ち合わせで「ここ見ながら進めましょう」と使える形式にまとめています。
+  </p>
+  <div class="meta">
+    <strong>作成日</strong>: 2026年4月24日　／　<strong>作成</strong>: 早川まい（電脳ワークス業務委託）
+  </div>
+</header>
+
+<!-- 参考リンク -->
+<section class="section" id="sec0" style="background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%); padding: 24px 30px; border-radius: 12px; margin-bottom: 36px;">
+  <h2 style="font-size: 18px; margin-bottom: 14px; border-bottom: 2px solid #4fc3f7; color: #006994;"><span class="num" style="background: #4fc3f7;">🔗</span>関連資料と使い分け</h2>
+  <p style="font-size: 13px; line-height: 1.9; margin-bottom: 14px;">
+    本資料とあわせて、<strong>ヒアリングシート（スプレッドシート）</strong>もご用意しております。次のように役割を分けてご確認ください。
+  </p>
+  <div style="background: white; border-radius: 8px; padding: 16px 20px; margin-bottom: 10px; border-left: 4px solid #ff6b35;">
+    <strong style="color: #e84a1c; font-size: 14px;">■ ヒアリングシート（スプレッドシート）</strong><br>
+    <a href="https://docs.google.com/spreadsheets/d/1ANXmQfMy6F1A768WvsN1TySC8mX5VafOnTWvEjt_pZY/edit" target="_blank" style="color: #0066cc; font-size: 13px; word-break: break-all;">https://docs.google.com/spreadsheets/d/1ANXmQfMy6F1A768WvsN1TySC8mX5VafOnTWvEjt_pZY/edit</a><br>
+    <span style="font-size: 12px; color: #666;">→ <strong>UI・ナレッジ・運用・セキュリティなど汎用項目</strong>のヒアリング（推奨・アドバイス付き35問）。お時間のある時にご記入ください。</span>
+  </div>
+  <div style="background: white; border-radius: 8px; padding: 16px 20px; border-left: 4px solid #006994;">
+    <strong style="color: #006994; font-size: 14px;">■ 本資料（ご提案資料）</strong><br>
+    <span style="font-size: 12px; color: #666;">→ <strong>診断の質問設計・5タイプ・船マッチング・拡張機能</strong>など、今回の案件に固有の設計詳細をまとめています。打ち合わせの場でご確認・ご意見いただければと思います。</span>
+  </div>
+</section>
+
+<!-- 1. はじめに -->
+<section class="section" id="sec1">
+  <h2><span class="num">1</span>はじめに</h2>
+
+  <div class="intro-box">
+    <strong>4/23ミーティングで決まったこと</strong>：<br>
+    ✅ 入口A（性格診断型）の方向性で進める<br>
+    ✅ ターゲットは20〜30代の若年層（クルーズに無関心な層）<br>
+    ✅ 質問形式は全てボタン型（離脱率最小化）<br>
+    ✅ 600店舗の旅行代理店DBにつなげる
+  </div>
+
+  <p>本資料は、上記の決定事項を踏まえて、<strong>設計をさらに一段深めるためのご提案</strong>と、<strong>4/25打ち合わせのヒアリング論点</strong>をまとめたものです。</p>
+
+  <h3>この資料で目指すもの</h3>
+  <ul class="q-list">
+    <li>チャットボットならではの価値を明確化（静的な診断ページとの差別化）</li>
+    <li>「思わず行きたい」と思える体験設計（南社長パワポのコンセプトを実装に落とす）</li>
+    <li>運用負荷を最小化する技術構成の選定根拠を明示</li>
+    <li>4/25打ち合わせで「決めるべき項目」を網羅的に整理</li>
+  </ul>
+
+  <h3>役割分担</h3>
+  <table>
+    <thead>
+      <tr><th style="width: 28%;">担当</th><th>役割</th><th style="width: 30%;">本件での動き</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ（発注元）</strong></td><td>サービス主体・エンドクライアント</td><td>情報提供・要件希望の提示のみ（制作・更新は発生しない）</td></tr>
+      <tr><td><strong style="color: #8b5cf6;">電脳ワークス（田中様）</strong></td><td>クルーズワールド.jp のHP制作</td><td>HP制作・運用・SEO。チャットボットの埋め込み実装連携</td></tr>
+      <tr><td><strong style="color: #ff6b35;">早川まい（電脳ワークス業務委託）</strong></td><td>AIチャットボットの構築・運用</td><td>設計・構築・保守・更新対応・月次レポート</td></tr>
+    </tbody>
+  </table>
+  <div class="spec-box">
+    <strong>ポイント</strong>：フォースウェーブ側には制作・運用タスクは発生しません。情報（店舗DB・船DB・PDFパンフ等）と要件のご希望のみ頂戴する形です。
+  </div>
+
+  <h3>チャットボット開発側とHP制作側の作業範囲</h3>
+  <p style="font-size: 13px; color: #666; margin-bottom: 10px;">
+    「どこまで早川が担当し、どこから田中様（HP制作側）が担当するか」を明確にしておくと進行がスムーズです。
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 40%;">項目</th>
+        <th style="width: 30%; text-align: center;">🤖 チャットボット側<br>（早川）</th>
+        <th style="width: 30%; text-align: center;">🌐 HP制作側<br>（田中様）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>診断ロジック・質問フローの設計</td><td class="ok">◎ 担当</td><td class="ng">ー</td></tr>
+      <tr><td>チャット画面内のデザイン（吹き出し・ボタン色・アイコン・フォント）</td><td class="ok">◎ 担当</td><td class="ng">ー</td></tr>
+      <tr><td>診断結果画面のデザイン・文言</td><td class="ok">◎ 担当</td><td class="ng">ー</td></tr>
+      <tr><td>AI相談員のナレッジ設計・応答調整</td><td class="ok">◎ 担当</td><td class="ng">ー</td></tr>
+      <tr><td>船マッチング・店舗マッチングのロジック</td><td class="ok">◎ 担当</td><td class="ng">ー</td></tr>
+      <tr><td>チャットボットをHPに呼び出す起動ボタンのデザイン</td><td class="ng">ー</td><td class="ok">◎ 担当</td></tr>
+      <tr><td>チャットボットをサイトのどこに表示するか（右下／中央／専用ページ 等）</td><td class="ng">ー</td><td class="ok">◎ 担当</td></tr>
+      <tr><td>HP全体の背景デザイン・柄・レイアウト</td><td class="ng">ー</td><td class="ok">◎ 担当</td></tr>
+      <tr><td>チャットボット表示エリアの大きさ・位置調整（CSS）</td><td class="ng">ー</td><td class="ok">◎ 担当</td></tr>
+      <tr><td>埋め込み方式（iframe／JSウィジェット／サブドメイン）</td><td class="ng">ー</td><td class="ok">◎ 担当</td></tr>
+      <tr><td>HPとチャットボットの色・フォントの統一感</td><td class="center">🤝 連携</td><td class="center">🤝 連携</td></tr>
+      <tr><td>公開時の結合テスト・動作確認</td><td class="center">🤝 連携</td><td class="center">🤝 連携</td></tr>
+    </tbody>
+  </table>
+
+  <div class="spec-box">
+    <strong>工数・費用イメージ</strong>：<br>
+    ・チャットボット側（早川）のデザイン調整は開発工数に含まれ、追加費用は基本発生しません。細かい色・アイコンのご希望があれば随時対応します。<br>
+    ・HP側の埋め込み実装・表示位置の調整は、HP制作の範囲内で田中様に対応いただく形になります。<br>
+    ・連携部分（色合わせ・埋め込み先ページの調整）は、両者で確認しながら進めます。
+  </div>
+</section>
+
+<!-- 2. 全体設計 -->
+<section class="section" id="sec2">
+  <h2><span class="num">2</span>全体設計：5ステージのカスタマージャーニー</h2>
+
+  <p>議事録34:23・32:16の南社長意図に沿って、<strong>「もっと知りたい」ボタンで連続する5ステージ構成</strong>とします。<br>
+  入口A（性格診断）→ 結果 → 入口B（感情分岐）→ 船マッチング → 店舗マッチング を一連のジャーニーとして体験させる設計です。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 18%;">ステージ</th>
+        <th>画面・機能</th>
+        <th style="width: 22%;">次への遷移</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong style="color: #4fc3f7;">1. 気づき</strong></td><td>Q1〜Q8 性格診断（ボタン型）→ 5タイプ判定 → 結果表示</td><td>「もっと知りたい」</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">2. 興味</strong></td><td>タイプ別クルーズ記事3本を紹介</td><td>「もっと知りたい」</td></tr>
+      <tr><td><strong style="color: #ffb088;">3. 感情分岐<br>（入口B）</strong></td><td>「不安なことある？」4択 → 不安解消コンテンツ提示</td><td>「もっと知りたい」</td></tr>
+      <tr><td><strong style="color: #ffb088;">4. 比較・船選び</strong></td><td>時期確認 → 🚢 船マッチング3パターン（格安／ミドル／豪華）</td><td>「気になる船あり」</td></tr>
+      <tr><td><strong style="color: #ff6b35;">5. CV</strong></td><td>都道府県選択 → 🏪 店舗マッチング3件 → 問い合わせフォーム</td><td>問い合わせ送信</td></tr>
+    </tbody>
+  </table>
+
+  <h3>ステージ3「感情分岐」の中身（パワポ入口Bを統合）</h3>
+  <p>診断結果＆記事を読んだ後、「行ってみたい気持ち」と「不安・疑問」の両方が出てくるタイミングです。<br>
+  ここで<strong>不安に寄り添う質問</strong>を出して、コンテンツで一つずつ解消していく設計とします。</p>
+
+  <div class="proposal-grid">
+    <div class="spec-box">
+      <strong>感情選択（4択ボタン）</strong><br>
+      😟 初めてで不安<br>
+      💰 費用が気になる<br>
+      🤔 どれを選べばいいか分からない<br>
+      🆚 他の旅行と何が違うの？
+      <p style="font-size: 11px; color: #666; margin-top: 8px;">※ パワポ スライド4「入口B 感情分岐」の4択をそのまま流用</p>
+    </div>
+    <div class="spec-box">
+      <strong>選択後のコンテンツ例</strong><br>
+      <strong style="font-size: 12px;">「初めてで不安」→</strong> 船酔い対策 / 一人参加でも浮かない理由 / 初心者短期コース<br>
+      <strong style="font-size: 12px;">「費用が気になる」→</strong> 3価格帯の比較 / 実はコスパ◎の解説 / 学生プラン
+    </div>
+  </div>
+
+  <h3>ステージ4「船マッチング」と ステージ5「店舗マッチング」</h3>
+  <p>議事録から、フォースウェーブ側で<strong>船会社・船のDBを作成中</strong>（議事録01:12:40）。これと600店舗DBを2段階でマッチングします。</p>
+
+  <table>
+    <thead>
+      <tr><th>マッチング層</th><th>キー</th><th>出力</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>🚢 船マッチング</strong></td><td>診断タイプ × 時期 × 予算 × 学生可否</td><td>具体的な船・コース3パターン（格安／ミドル／豪華）</td></tr>
+      <tr><td><strong>🏪 店舗マッチング</strong></td><td>お住まい地域 × 診断タイプ</td><td>近くの旅行代理店3件＋推薦理由</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 3. 技術選定（最重要セクション） -->
+<section class="section" id="sec3" style="background: linear-gradient(135deg, #fff8ee 0%, #fff5ef 100%); padding: 30px; border-radius: 16px; margin-bottom: 50px; border: 2px solid #ffcbb3;">
+  <h2><span class="num">3</span>技術選定とその根拠 <span class="tag tech">TECH</span></h2>
+
+  <div class="highlight-box">
+    <span class="label">本セクションのポイント</span><br>
+    「<strong>何を使って、なぜそれが最適か</strong>」を根拠とともにお示しします。<br>
+    運用負荷を最小化することを最優先に、各レイヤーで最適なツールを選定しています。
+  </div>
+
+  <h3>① プラットフォーム：Dify セルフホスト を推奨</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">選択肢</th>
+        <th>メリット</th>
+        <th>デメリット</th>
+        <th style="width: 12%;">評価</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Dify セルフホスト</strong></td>
+        <td>固定サーバー費で利用量に依存しない／ノーコード管理画面で学生さんも更新可／OSSで拡張自由／日本語コミュニティ活発</td>
+        <td>初期環境構築の工数あり</td>
+        <td class="star">⭐ 推奨</td>
+      </tr>
+      <tr>
+        <td>Dify クラウド版</td>
+        <td>セットアップ即時／管理楽</td>
+        <td>利用量連動課金でスケール時に負荷増</td>
+        <td class="ng">△</td>
+      </tr>
+      <tr>
+        <td>Voiceflow / Botpress</td>
+        <td>UI充実／多機能</td>
+        <td>月額固定SaaS費が発生／日本語精度・拡張性でDifyに劣る</td>
+        <td class="ng">△</td>
+      </tr>
+      <tr>
+        <td>自前実装<br>（HTML+JS+API）</td>
+        <td>最軽量／完全コントロール</td>
+        <td>学生さんが管理画面から更新できない／改修のたびに開発工数</td>
+        <td class="ng">✕</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="spec-box">
+    <strong>選定理由</strong>：① 月額固定費で利用量に左右されず予測可能　② ノーコードの管理画面で、アカウントをお持ちの方ならブラウザから誰でも質問・記事URL・店舗情報を短時間で更新可能（通常運用は早川が担当）　③ OSSなのでベンダーロックインなし　④ 日本語対応とコミュニティが活発で安心して長期運用できる
+  </div>
+
+  <h3>② LLM API：Claude Haiku 4.5 を推奨</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">モデル</th>
+        <th class="center">速度</th>
+        <th class="center">日本語精度</th>
+        <th class="center">運用効率</th>
+        <th class="center">用途適合度</th>
+        <th style="width: 12%;">評価</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Claude Haiku 4.5</strong></td>
+        <td class="ok">⚡ 最速</td>
+        <td class="ok">◎ 自然</td>
+        <td class="ok">◎</td>
+        <td class="ok">◎</td>
+        <td class="star">⭐ 推奨</td>
+      </tr>
+      <tr>
+        <td>GPT-4o-mini</td>
+        <td class="center">○</td>
+        <td class="center">○</td>
+        <td class="ok">◎</td>
+        <td class="center">○</td>
+        <td class="center">○</td>
+      </tr>
+      <tr>
+        <td>Gemini 2.0 Flash</td>
+        <td class="center">○</td>
+        <td class="ng">△ やや硬い</td>
+        <td class="ok">◎</td>
+        <td class="center">△</td>
+        <td class="center">△</td>
+      </tr>
+      <tr>
+        <td>Claude Sonnet / GPT-4</td>
+        <td class="center">△</td>
+        <td class="ok">◎</td>
+        <td class="ng">✕ 重い</td>
+        <td class="ng">過剰</td>
+        <td class="ng">不採用</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="spec-box">
+    <strong>選定理由</strong>：カジュアルな相談応答に上位モデル（Sonnet/GPT-4）は過剰スペック。Haiku 4.5 は<strong>日本語の自然さと応答速度のバランスが最良</strong>で、不安解消という今回の用途に最適。将来的に上位モデルへ切り替えはDify側の設定変更だけで対応可能なので、まずHaikuで開始するのが合理的です。
+  </div>
+
+  <h3>③ 機能ごとの「LLM使用 / 不使用」の切り分け</h3>
+  <p><strong>運用負荷を最小化する一番のポイント</strong>は、機能ごとに「LLMを使う部分」と「使わない部分」を明確に分けることです。今回の設計では、<strong>LLM呼び出しを必要最小限</strong>に抑えています。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">機能</th>
+        <th class="center" style="width: 18%;">LLM使用</th>
+        <th>実装方針</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>性格診断（Q1〜Q8）</strong></td><td class="ng">✕ 不使用</td><td>ボタン選択 × スコアリング（条件分岐ロジック）。LLM呼び出しゼロ。</td></tr>
+      <tr><td><strong>タイプ判定・結果表示</strong></td><td class="ng">✕ 不使用</td><td>事前用意の固定テキスト5種類を出し分け。LLM呼び出しゼロ。</td></tr>
+      <tr><td><strong>記事レコメンド</strong></td><td class="ng">✕ 不使用</td><td>タイプ × 記事のマッピング表で出し分け。LLM呼び出しゼロ。</td></tr>
+      <tr><td><strong>船マッチング</strong></td><td class="ng">✕ 不使用</td><td>船DBを「タイプ × 時期 × 予算」で絞り込み。LLM呼び出しゼロ。</td></tr>
+      <tr><td><strong>店舗マッチング</strong></td><td class="ng">✕ 不使用</td><td>600店舗DBから都道府県で絞り込み。LLM呼び出しゼロ。</td></tr>
+      <tr><td><strong>AI相談員（不安解消）</strong></td><td class="ok">○ 使用</td><td>自由質問への応答のみLLM使用。RAGで事前ナレッジを参照、応答は短く完結。</td></tr>
+      <tr><td><strong>店舗推薦理由のコメント</strong></td><td class="ok">○ 使用</td><td>テンプレートに値を埋める形式。プロンプトキャッシュで入力負荷削減。</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <strong>負荷を最小化するポイント</strong><br>
+    ① LLMを使うのは「ユーザーの自由入力が発生する箇所」のみに限定<br>
+    ② <strong>RAG</strong>（検索拡張生成）でナレッジを事前整備 → 長いコンテキスト不要<br>
+    ③ <strong>プロンプトキャッシュ</strong>で繰り返し入力の負荷を削減<br>
+    ④ Haiku 4.5 で高速・低負荷な応答<br>
+    ⑤ 利用量はDifyの管理画面で継続モニタリング
+  </div>
+</section>
+
+<!-- 4. 設計改善提案 -->
+<section class="section" id="sec4">
+  <h2><span class="num">4</span>現状スコープと将来拡張のご提案</h2>
+
+  <h3>南社長のパワポ構想と、初期スコープ（20万円＋月5万）でカバーできる範囲</h3>
+  <p>4/23ミーティングでご共有いただいたパワポ資料の各機能について、<strong>現在の予算内でお請けできる部分</strong>と、<strong>追加でご相談いただきたい部分</strong>を整理しました。<br>
+  最初から全部を実装するのではなく、<strong>「まずは基本機能で公開 → 反応を見て段階的に拡張」</strong>という進め方をご提案いたします。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 35%;">パワポ資料の機能</th>
+        <th class="center" style="width: 22%;">初期スコープ内<br>(20万＋月5万)</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>性格診断（4〜6問、今回8問で設計）</td>
+        <td class="ok">✓ 含む</td>
+        <td>ボタン型・スコアリングで実装</td>
+      </tr>
+      <tr>
+        <td>結果に応じたパーソナライズ表示（5タイプ）</td>
+        <td class="ok">✓ 含む</td>
+        <td>固定テキスト5種類の出し分け</td>
+      </tr>
+      <tr>
+        <td>感情ボタン4択からの分岐</td>
+        <td class="ok">✓ 含む</td>
+        <td>入口B相当。シンプルな分岐として実装</td>
+      </tr>
+      <tr>
+        <td>スマホ・PC完全対応</td>
+        <td class="ok">✓ 含む</td>
+        <td>Dify標準機能で対応</td>
+      </tr>
+      <tr>
+        <td>問い合わせフォームへの誘導</td>
+        <td class="ok">✓ 含む</td>
+        <td>既存フォーム流用前提</td>
+      </tr>
+      <tr>
+        <td>600店舗マッチング（都道府県でのシンプル絞り込み）</td>
+        <td class="ok">✓ 含む</td>
+        <td>DB検索による基本マッチング</td>
+      </tr>
+      <tr>
+        <td>タイプ別の記事リンク表示</td>
+        <td class="ok">✓ 含む</td>
+        <td>タイプ × 記事のマッピングで出し分け</td>
+      </tr>
+      <tr>
+        <td>ストーリー型の会話シナリオ（深い物語構築）</td>
+        <td style="text-align: center; color: #ff6b35;">△ 簡易版は含む</td>
+        <td>本格的な物語型会話は別途ご相談</td>
+      </tr>
+      <tr>
+        <td>チャットログ取得・GA4連携（高度分析）</td>
+        <td style="text-align: center; color: #ff6b35;">△ 基本のみ</td>
+        <td>ログ取得は実装。ダッシュボード構築は別案件</td>
+      </tr>
+      <tr>
+        <td>FUN要素・ビジュアルリッチデザイン</td>
+        <td class="no">＋ 別途</td>
+        <td>背景画像・キャラ等は<a href="#sec4-extend" style="color: #ff6b35;">拡張機能</a>参照</td>
+      </tr>
+      <tr>
+        <td>AI相談員（LLMで不安・疑問に自由応答）</td>
+        <td class="no">＋ 別途</td>
+        <td>本資料の「設計改善提案①」に該当</td>
+      </tr>
+      <tr>
+        <td>船マッチング（時期×予算×学生可否での複雑な絞り込み）</td>
+        <td class="no">＋ 別途</td>
+        <td>船DB構造化が必要。段階実装を推奨</td>
+      </tr>
+      <tr>
+        <td>店舗推薦理由のAI生成</td>
+        <td class="no">＋ 別途</td>
+        <td>本資料の「設計改善提案②」に該当</td>
+      </tr>
+      <tr>
+        <td>自由入力収集機能</td>
+        <td class="no">＋ 別途</td>
+        <td>本資料の「設計改善提案③」に該当</td>
+      </tr>
+      <tr>
+        <td>選択に応じた背景切替・キャラクター登場</td>
+        <td class="no">＋ 別途</td>
+        <td>将来拡張として<a href="#sec4-extend" style="color: #ff6b35;">後述</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spec-box">
+    <strong>🟢 まとめ</strong>：初期スコープ（20万＋月5万）で、パワポ構想の<strong>基本骨格はすべて実装可能</strong>です。<br>
+    ユーザーが診断を受けて、タイプが出て、記事を見て、地域の店舗に問い合わせる──この一連のジャーニーは成立します。<br><br>
+    一方で、パワポで表現されている「FUN要素」「ビジュアルリッチ」「ストーリー型の深い会話」「高度なパーソナライズ」といった<strong>体験の厚みを増す部分</strong>は、追加のご相談事項となります。<br>
+    以下で改善提案と拡張機能をご紹介しますので、優先順位をつけてご検討いただければと思います。
+  </div>
+
+  <h3 id="sec4-extend">設計改善・拡張機能のご提案</h3>
+  <p>「ただの診断クイズ」ではなく「チャットボットならではの価値」を出すために、3つの改善案をご提案します。<br>
+  <strong>段階的に導入することも可能</strong>です（後述）。</p>
+
+  <div class="proposal-grid">
+    <div class="proposal-card">
+      <div class="num">1</div>
+      <h4>診断のあとに「AI相談員」を出す</h4>
+      <p>診断結果を出した直後、ユーザーが「クルーズについて気になること」を自由に質問できるAI相談員を用意。船酔い・費用・一人参加・学生プランなど、個別の不安に答えます。</p>
+    </div>
+    <div class="proposal-card">
+      <div class="num">2</div>
+      <h4>船・店舗マッチングに「理由」を添える</h4>
+      <p>機械的に近い店舗を出すだけでなく、「あなたには○○がおすすめ、なぜなら…」とAIで個別説明。船もタイプ × 時期 × 予算で個別レコメンド。</p>
+    </div>
+    <div class="proposal-card">
+      <div class="num">3</div>
+      <h4>最後に1問だけ自由入力で「声」を集める</h4>
+      <p>「他に気になることがあれば教えてください（任意）」と最後に1問だけ。お金を払っても得られないユーザーの生の声が、記事ネタ・広告コピーの素材になります。</p>
+    </div>
+    <div class="proposal-card">
+      <div class="num">+</div>
+      <h4>段階導入もOK</h4>
+      <p>v1で最小構成（診断＋マッチング）公開 → v2でAI相談員追加 → v3で自由入力＋推薦理由生成 と段階リリース可能。運用負荷を見ながら拡張できます。</p>
+    </div>
+  </div>
+
+  <h3>提案①「AI相談員」の会話イメージ</h3>
+  <div class="chat-preview">
+    <div class="chat-bubble bot">✨ あなたは【映え探求者】タイプ！<br>気になることあれば何でも聞いてね</div>
+    <div class="chat-bubble user">船酔いとか大丈夫？心配…</div>
+    <div class="chat-bubble bot">大丈夫、若者向けの船は揺れ対策バッチリ。朝起きたら別の港に着いてる感じだよ☕</div>
+    <div class="chat-bubble user">学生でも行けるの？</div>
+    <div class="chat-bubble bot">行ける！学生プランある船もあるし、友達と割るとホテル旅行より安いコースもあるよ✈️</div>
+  </div>
+
+  <h3>段階導入プラン</h3>
+  <div class="step-flow">
+    <div class="step">
+      <strong>Phase v1 最小構成</strong>
+      診断＋タイプ別記事＋船・店舗マッチング＋問い合わせで公開
+    </div>
+    <div class="step">
+      <strong>Phase v2 AI相談員追加</strong>
+      v1の利用状況を見て、AI相談員機能を追加
+    </div>
+    <div class="step">
+      <strong>Phase v3 データ活用</strong>
+      自由入力収集＋AI推薦理由生成を追加。データ資産化フェーズへ
+    </div>
+  </div>
+
+  <h3>将来的な機能拡張の可能性</h3>
+  <p style="font-size: 13px; color: #666; margin-bottom: 12px;">
+    4/23ミーティングで南社長から「選択した内容に応じて背景画像やキャラクターを変えたい」というご意向を伺いました。<br>
+    こうした<strong>リッチUI拡張</strong>は現在のスコープ外ですが、将来的な追加実装として、以下のような方向性が考えられます。
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">拡張機能</th>
+        <th>できること</th>
+        <th style="width: 18%; text-align: center;">開発工数目安</th>
+        <th style="width: 20%; text-align: center;">追加費用目安</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>① タイプ別背景切替</strong></td>
+        <td>診断結果ページで、判定されたタイプに応じて背景画像・配色が変わる（例：Bタイプなら南国の海、Dタイプなら温泉のイメージ）</td>
+        <td class="center">3〜5営業日</td>
+        <td class="center">5〜10万円</td>
+      </tr>
+      <tr>
+        <td><strong>② 質問ごとの動的背景</strong></td>
+        <td>Q1〜Q8の質問内容や選択肢に合わせて、チャット画面の背景がフェード切替（例：海の質問なら海、食の質問なら料理）</td>
+        <td class="center">7〜10営業日</td>
+        <td class="center">15〜25万円</td>
+      </tr>
+      <tr>
+        <td><strong>③ タイプ別キャラクター</strong></td>
+        <td>5タイプそれぞれに対応したマスコットキャラクターが結果ページに登場。吹き出しで語りかける形式</td>
+        <td class="center">10〜15営業日</td>
+        <td class="center">20〜40万円<br>（キャラ制作費含む）</td>
+      </tr>
+      <tr>
+        <td><strong>④ アニメーション演出</strong></td>
+        <td>質問遷移時のアニメ・結果発表時のファンファーレ演出・ボタンホバー動作</td>
+        <td class="center">3〜7営業日</td>
+        <td class="center">8〜15万円</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 診断結果のシェア画像生成</strong></td>
+        <td>結果画面を綺麗なOGP画像として自動生成し、Instagram/X等へシェアしやすくする</td>
+        <td class="center">2〜4営業日</td>
+        <td class="center">5〜10万円</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="spec-box">
+    <strong>費用・工数の算出根拠</strong>：<br>
+    ・画像素材の制作（AI生成／ストック／オリジナル）、UIカスタマイズ実装、動作テストの合計工数をベースに算出<br>
+    ・Difyの標準UIを超えるカスタマイズが必要なため、HTML/CSS/JSでのフロントエンド開発工数が追加で発生<br>
+    ・上記はあくまで<strong>目安</strong>であり、実装時のご希望（素材の質・演出の細かさ）によって変動します
+  </div>
+
+  <div class="highlight-box">
+    <span class="label">おすすめの進め方</span><br>
+    まず<strong>v1最小構成</strong>で公開し、ユーザーの反応（診断完了率・滞在時間）を見てから、<strong>効果が見込める拡張から順に追加</strong>することをおすすめします。<br>
+    例：タイプ別背景切替（①）→ アニメ演出（④）→ シェア画像（⑤）の順で導入すると、費用を抑えつつUXを段階的に向上できます。
+  </div>
+</section>
+
+<!-- 5. 質問・タイプ詳細 -->
+<section class="section" id="sec5">
+  <h2><span class="num">5</span>質問・タイプ設計詳細 <span class="tag must">叩き台</span></h2>
+
+  <h3>5タイプ設計</h3>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="badge">A</div>
+      <h5>ふらり一人旅人</h5>
+      <p class="desc">一人時間重視<br>静か・読書好き</p>
+      <div class="ship">国内短期<br>落ち着いた船</div>
+    </div>
+    <div class="type-card">
+      <div class="badge">B</div>
+      <h5>映え探求者</h5>
+      <p class="desc">SNS映え・新体験<br>写真撮りたい</p>
+      <div class="ship">寄港地多め<br>カジュアル船</div>
+    </div>
+    <div class="type-card">
+      <div class="badge">C</div>
+      <h5>グルメ冒険家</h5>
+      <p class="desc">食重視・文化好き<br>現地体験派</p>
+      <div class="ship">アジア寄港地<br>食べ歩き型</div>
+    </div>
+    <div class="type-card">
+      <div class="badge">D</div>
+      <h5>ゆるリラックス派</h5>
+      <p class="desc">何もしない贅沢<br>癒し・温泉好き</p>
+      <div class="ship">国内周遊<br>船内施設充実</div>
+    </div>
+    <div class="type-card">
+      <div class="badge">E</div>
+      <h5>みんなでワイワイ</h5>
+      <p class="desc">友達と盛り上がり<br>イベント好き</p>
+      <div class="ship">パーティー船<br>グループ向け</div>
+    </div>
+  </div>
+
+  <h3>質問8問（叩き台）</h3>
+  <p style="font-size: 12px; color: #666;">各回答に A〜E のタイプ加点（+1）を振り、最大値タイプを判定。クルーズというキーワードは結果表示まで出さない設計。</p>
+  <div class="question-grid">
+    <div class="q-block">
+      <div class="q-num">Q1</div>
+      <div class="q-title">連休の理想の過ごし方は？</div>
+      <div class="q-opt">① 家でゴロゴロ映画三昧 <span>A+1, D+1</span><br>② カフェ巡りで写真撮りまくる <span>B+1</span><br>③ 美味しいもの求めて遠出 <span>C+1</span><br>④ 温泉でとろけたい <span>D+1</span><br>⑤ 友達と朝まで盛り上がる <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q2</div>
+      <div class="q-title">旅行で一番大事なのは？</div>
+      <div class="q-opt">① 自分のペース <span>A+1</span><br>② 写真と思い出 <span>B+1</span><br>③ 食事 <span>C+1</span><br>④ 何もしない自由 <span>D+1</span><br>⑤ 一緒に行く人 <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q3</div>
+      <div class="q-title">SNSは何派？</div>
+      <div class="q-opt">① 見る専 or やってない <span>A+1, D+1</span><br>② ストーリー毎日投稿 <span>B+1</span><br>③ 食べ物の写真ばっかり <span>C+1</span><br>④ たまに気が向いたら <span>A+1</span><br>⑤ 友達のタグ付け多め <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q4</div>
+      <div class="q-title">友達に「無人島1週間どう？」と言われたら？</div>
+      <div class="q-opt">① 絶対無理、文明が恋しい <span>D+1, E+1</span><br>② 一人ならいいかも <span>A+1</span><br>③ カメラ持っていきたい <span>B+1</span><br>④ 現地の食材で料理したい <span>C+1</span><br>⑤ 大人数なら楽しそう <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q5</div>
+      <div class="q-title">10万円臨時収入で入ったら？</div>
+      <div class="q-opt">① 貯金 or 推しに使う <span>A+1</span><br>② 服や美容 <span>B+1</span><br>③ 高級レストラン <span>C+1</span><br>④ 旅館・スパ <span>D+1</span><br>⑤ 友達と打ち上げ <span>E+1</span></div>
+    </div>
+    <div class="q-block" style="border-color: #ff6b35; background: #fff8ee;">
+      <div class="q-num">Q6</div>
+      <div class="q-title">あなたを動物に例えると？</div>
+      <div class="q-opt">① 猫（マイペース） <span>A+1</span><br>② 孔雀（きれいで目立ちたい） <span>B+1</span><br>③ 犬（探検・グルメ好き） <span>C+1</span><br>④ ナマケモノ（のんびり） <span>D+1</span><br>⑤ イルカ（群れ好き） <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q7</div>
+      <div class="q-title">海と聞いて思い浮かべるのは？</div>
+      <div class="q-opt">① 朝の静かな波音 <span>A+1, D+1</span><br>② エメラルドグリーンの絶景 <span>B+1</span><br>③ 漁港の朝市 <span>C+1</span><br>④ 砂浜でゴロゴロ <span>D+1</span><br>⑤ ビーチパーティー <span>E+1</span></div>
+    </div>
+    <div class="q-block">
+      <div class="q-num">Q8</div>
+      <div class="q-title">旅先で必ず買うお土産は？</div>
+      <div class="q-opt">① 自分用の本 or 雑貨 <span>A+1</span><br>② 写真に撮りたい可愛いもの <span>B+1</span><br>③ 地元の食べ物 <span>C+1</span><br>④ お風呂グッズ・コスメ <span>D+1</span><br>⑤ みんなに配るお菓子 <span>E+1</span></div>
+    </div>
+  </div>
+
+  <h3>結果ページ例（タイプB「映え探求者」）</h3>
+  <div class="spec-box" style="font-size: 13px;">
+    <strong>✨ あなたは【映え探求者】タイプ ✨</strong><br><br>
+    新しい景色、まだ見たことない体験。<br>
+    そんなあなたにぴったりなのは、寄港地でいろんな街を歩き回れて、写真スポットがたくさんある旅。<br><br>
+    実は、若い世代に今ひそかに人気の旅、知ってる？<br><br>
+    [もっと知りたい]　[シェアする]
+  </div>
+</section>
+
+<!-- 6. 確認いただきたいこと -->
+<section class="section" id="sec6">
+  <h2><span class="num">6</span>打ち合わせで確認いただけると助かる項目</h2>
+
+  <p style="font-size: 13px; color: #666; margin-bottom: 16px;">
+    <strong>スプレッドシートには含まれない、今回の診断設計に固有の項目</strong>を中心に、打ち合わせで南社長にご意向を伺えると助かる論点をまとめました。<br>
+    すべて必須ではなく、話の流れで触れていただける範囲で構いません。<br>
+    田中様のご判断で優先順位を調整していただければと思います。
+  </p>
+
+  <div class="spec-box" style="background: #f0f7ff; border-left-color: #006994; margin-bottom: 20px;">
+    <strong>スプレッドシート × 本資料の役割分担</strong><br>
+    ・<strong>スプレッドシート（35問）</strong>：UI・ナレッジ・運用・セキュリティ等の<strong>汎用項目</strong>をご記入<br>
+    ・<strong>本資料（以下の論点）</strong>：診断の質問設計・5タイプ・船マッチング・拡張機能など、<strong>今回固有の設計項目</strong>を打ち合わせでご確認
+  </div>
+
+  <h3>診断設計のレビュー（本資料セクション2〜5関連）</h3>
+  <ul class="q-list">
+    <li>質問8問の叩き台の妥当性（<a href="#sec5" style="color: #006994;">セクション5参照</a>） — このまま進めるか、修正したい箇所があるか</li>
+    <li>5タイプの名称・特徴（A〜E）の妥当性 — 学生が乗れる船と紐付くか</li>
+    <li>ステージ3 感情分岐（入口B）の4択（初めてで不安／費用が気になる／どれを選べば／他旅行と違い）の採否</li>
+    <li>船マッチングの条件（時期 × タイプ × 予算 × 学生可否）のご意向</li>
+    <li>拡張機能（<a href="#sec4" style="color: #006994;">セクション4参照</a>）のご希望 — 背景切替・キャラクター・アニメ演出など、どれを優先したいか</li>
+  </ul>
+
+  <h3>設計の方向性について</h3>
+  <ul class="q-list">
+    <li>質問の方向性：感情系・性格診断寄りで進めるか、パワポ素案の「旅スタイル・予算・同行者・期間」ベースがよいか</li>
+    <li>質問数とタイプ数：8問×5タイプの規模感でよさそうか</li>
+    <li>クルーズキーワードの出し方：結果表示まで隠す設計でよさそうか</li>
+    <li>提案①〜③（AI相談員・推薦理由・自由入力）を取り入れるかどうか、ご意向</li>
+    <li>段階導入（v1/v2/v3）のご希望（最小構成から始めるか、まとめて実装するか）</li>
+  </ul>
+
+  <h3>情報・素材のご提供について</h3>
+  <ul class="q-list">
+    <li>600店舗DBの形式・更新頻度についてのご意向</li>
+    <li>船・船会社DBの作成状況（いつ頃ご提供いただけそうか）</li>
+    <li>学生が乗れる船のリストを、タイプ設計の妥当性確認のため共有いただけるか</li>
+    <li>タイプ別の参照記事URLを、フォースウェーブ側で選んでいただけるか（早川側で候補出しすることも可能）</li>
+    <li>問い合わせフォームについて：<br>
+      <span class="sub">・既存のお問い合わせフォームをそのまま使うか、チャット画面内に新しく組み込むか<br>
+      ・送信された問い合わせをどなたが受け取り、その後どう対応されるか</span></li>
+  </ul>
+
+  <h3>UX・デザインについてのご希望</h3>
+  <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+    ※ 具体的な作業分担はセクション1「チャットボット開発側とHP制作側の作業範囲」をご参照ください。
+  </p>
+  <ul class="q-list">
+    <li>チャットボット内の話し方のご希望（敬語／タメ口／絵文字の有無）<br>
+      <span class="sub">→ チャットボット側で対応</span></li>
+    <li>キャラクター・マスコットの有無、ロゴやアイコンのご希望<br>
+      <span class="sub">→ チャットボット側で対応（素材があればご提供ください）</span></li>
+    <li>サイト上での表示位置・サイズ感のご希望（右下フローティング／全画面モーダル／専用ページ 等）<br>
+      <span class="sub">→ HP制作側（田中様）で対応</span></li>
+    <li>HPとの色合わせ・フォント統一のご希望<br>
+      <span class="sub">→ 両者で連携して対応</span></li>
+  </ul>
+
+  <h3>公開後の運用スタイルについて</h3>
+  <p style="font-size: 13px; color: #666; margin-bottom: 10px;">
+    公開後の日常運用は、<strong>電脳ワークス様（田中様）側で柔軟にご対応いただけるスタイル</strong>を想定しています。
+    Difyはノーコード管理画面なので、操作方法を初期段階でお伝えすれば、質問追加・記事URL変更・店舗情報更新などは田中様側で即時対応が可能です。
+    大きな改修や機能追加が必要な際に、その都度早川にご相談いただく形がスムーズです。
+  </p>
+  <ul class="q-list">
+    <li>情報更新の依頼ルート（フォースウェーブ様→田中様→（必要時）早川、のような流れ）</li>
+    <li>問い合わせフォーム受信後のフォースウェーブ様側での対応フロー</li>
+    <li>月次レポートの有無・形式のご希望（必要に応じて都度ご相談で対応）</li>
+    <li>緊急時（障害発生等）の連絡ルート</li>
+    <li>運用スタイルのご希望<br>
+      <span class="sub">① 田中様側で自走編集 / ② 都度早川にご相談 / ③ ハイブリッド のいずれか</span></li>
+  </ul>
+
+  <h3>KPIについて</h3>
+  <p style="font-size: 13px; color: #666; margin-bottom: 10px;">
+    パワポのスライド5にKPI枠（XX%）がございました。数値の目安について、南社長のご希望があれば伺えると助かります。
+  </p>
+  <ul class="q-list">
+    <li>チャット利用率・診断完了率・CV数など、目指したい数値感<br>
+      <span class="sub">参考：性格診断系は診断完了率60-80%が一般的／チャット利用率5-10%で優秀とされる</span></li>
+    <li>測定ツール（GA4／Dify分析機能）についてのご希望</li>
+    <li>レポートの頻度・形式のご希望</li>
+    <li>ABテストを実施する場合の対象項目（コピー／ボタン位置／質問順など）</li>
+  </ul>
+</section>
+
+<!-- 7. データ収集リスト -->
+<section class="section" id="sec7">
+  <h2><span class="num">7</span>必要なデータ・素材一覧 <span class="tag data">DATA</span></h2>
+
+  <p>以下はフォースウェーブ様から<strong>情報のご提供をお願いしたい項目</strong>です。構築・設計作業は早川が担当しますので、素材・要件をご提供いただければ進行可能です。</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 32%;">情報・素材</th>
+        <th>用途・補足</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>600店舗DB</strong> <span class="tag must">MUST</span></td><td>地域マッチング用。都道府県・市区町村・店舗名・住所・連絡先・営業時間・得意分野</td></tr>
+      <tr><td><strong>船・船会社DB</strong> <span class="tag must">MUST</span></td><td>船マッチング用。船名・キャビン種別・出発港・航路・価格帯・対象年齢・シーズン・所要日数（フォースウェーブ側で作成中）</td></tr>
+      <tr><td><strong>船会社PDFパンフ</strong> <span class="tag must">MUST</span></td><td>船DBの元素材。最低5社分（早川が構造化対応）</td></tr>
+      <tr><td><strong>タイプ別記事URL（5×3=15本）</strong> <span class="tag should">SHOULD</span></td><td>結果ページ→クルーズ紹介への誘導先</td></tr>
+      <tr><td><strong>学生が乗れる船リスト</strong> <span class="tag must">MUST</span></td><td>タイプ設計の妥当性確認</td></tr>
+      <tr><td><strong>不安・FAQ想定リスト</strong> <span class="tag should">SHOULD</span></td><td>AI相談員のRAGナレッジ。ヒアリング内容を元に早川が整備</td></tr>
+      <tr><td><strong>結果ページ用イメージ画像（5タイプ）</strong> <span class="tag nice">NICE</span></td><td>タイプ別ビジュアル。なければAI生成 or ストック画像で早川が代替</td></tr>
+      <tr><td><strong>ブランドカラー・ロゴ</strong> <span class="tag should">SHOULD</span></td><td>チャットボット配色・アイコン（既存素材があれば）</td></tr>
+      <tr><td><strong>問い合わせフォーム仕様のご希望</strong> <span class="tag must">MUST</span></td><td>既存流用ならURL／新規なら必須項目のご希望</td></tr>
+    </tbody>
+  </table>
+
+  <h4>PDFパンフからの構造化方針</h4>
+  <p>船会社ごとにフォーマットがバラバラのため、共通スキーマに変換します。<br>
+  議事録56:21で田中氏が「PDFのままでOK、CSV変換不要」と発言。ただし<strong>共通項目への構造化</strong>は必須です。</p>
+  <div class="spec-box">
+    <strong>共通スキーマ案</strong>：船名／キャビン種別／出発港／航路／価格帯（格安・ミドル・豪華）／対象年齢／シーズン／所要日数／学生プラン有無／推奨タイプ
+  </div>
+</section>
+
+<!-- 8. リスク -->
+<section class="section" id="sec8">
+  <h2><span class="num">8</span>リスクと対処</h2>
+
+  <p>議事録から読み取れる潜在リスクと、その対処方針です。4/25で事前に握っておくとトラブル回避になります。</p>
+
+  <div class="risk-box">
+    <strong>① 情報・素材提供の遅延リスク</strong>
+    フォースウェーブ側の業務状況次第で、店舗DB・船DB・PDFパンフ等のご提供が遅れると実装工程が後ろ倒しになります。<br>
+    <strong>対処</strong>：4/25で提供期限を具体的に握る／遅延時は早川が仮データで先行実装し、後から差し替える運用に
+  </div>
+
+  <div class="risk-box">
+    <strong>② 利用量増加リスク</strong>
+    アクセス増でAPI呼び出し回数が膨らむ可能性。<br>
+    <strong>対処</strong>：本資料セクション3③の「LLM使用箇所を最小化する設計」で対応。Dify管理画面で利用量モニタリング。
+  </div>
+
+  <div class="risk-box">
+    <strong>③ テンプレ感リスク</strong>
+    南社長「テンプレ感になる」を懸念（議事録01:09:27）。<br>
+    <strong>対処</strong>：タイプ名・コピー・結果画面の差別化をレビュー工程で入念に
+  </div>
+
+  <div class="risk-box">
+    <strong>④ データ準備遅延リスク</strong>
+    PDFパンフ・店舗DB・記事URLの準備遅れで実装後ろ倒しの可能性。<br>
+    <strong>対処</strong>：4/25で具体的な期限を握る（セクション7を参照）
+  </div>
+
+  <div class="risk-box">
+    <strong>⑤ Dify以外の代替検討</strong>
+    田中氏「Difyは原価がかかる」発言（議事録01:13:19）。<br>
+    <strong>対処</strong>：本資料セクション3①でDify セルフホスト推奨の根拠を整理済み。代替案も比較済み。
+  </div>
+
+  <div class="risk-box">
+    <strong>⑥ 既存チャットボットとの差別化</strong>
+    JTBや楽天の既存チャットボット事例は機能限定で消えているケースも（議事録47:20）。<br>
+    <strong>対処</strong>：性格診断型 × 感情設計 × カスタマージャーニー で独自性を確保
+  </div>
+</section>
+
+<!-- 9. スケジュール -->
+<section class="section" id="sec9">
+  <h2><span class="num">9</span>実装スケジュール案</h2>
+
+  <div class="step-flow">
+    <div class="step"><strong>Phase 1 要件定義</strong>打ち合わせを重ねて要件・設計を確定</div>
+    <div class="step"><strong>Phase 2 素材準備</strong>店舗DB・PDFパンフ・記事URL等の情報ご提供</div>
+    <div class="step"><strong>Phase 3 設計</strong>質問v2確定・Difyフロー設計</div>
+    <div class="step"><strong>Phase 4 実装</strong>Dify本構築・サイト埋め込み</div>
+    <div class="step"><strong>Phase 5 テスト・公開</strong>QA・ABテスト・本番公開</div>
+    <div class="step"><strong>Phase 6 運用・改善</strong>月次レポート・継続改善</div>
+  </div>
+  <p style="font-size: 12px; color: #666;">※ フェーズ順序の参考です。進行ペースは情報ご提供のタイミングに合わせて調整します。</p>
+</section>
+
+<!-- 10. 次のアクション -->
+<section class="section" id="sec10">
+  <h2><span class="num">10</span>次のアクション</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width: 28%;">担当</th><th>内容</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>本資料の質問・タイプ・5ステージ設計のレビューとご希望の提示</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>5タイプの妥当性チェック（学生船に紐付くか）</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>提案①〜③（AI相談員・推薦理由・自由入力）の採否ご決定</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>段階導入プラン（v1/v2/v3）のご選択</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>600店舗DB・船DBのサンプルご提供</td></tr>
+      <tr><td><strong style="color: #4fc3f7;">フォースウェーブ</strong></td><td>タイプ別の参照記事URL選定（5×3=15記事）</td></tr>
+      <tr><td><strong style="color: #8b5cf6;">電脳ワークス（田中様）</strong></td><td>HP制作の進捗・チャットボット埋め込み先ページの調整</td></tr>
+      <tr><td><strong style="color: #ff6b35;">早川まい</strong></td><td>レビュー反映後、本資料v2へ更新</td></tr>
+      <tr><td><strong style="color: #ff6b35;">早川まい</strong></td><td>Dify環境セットアップ＆プロトタイプ構築</td></tr>
+      <tr><td><strong style="color: #ff6b35;">早川まい</strong></td><td>プロトタイプ画面共有・操作デモ</td></tr>
+      <tr><td><strong style="color: #ff6b35;">早川まい</strong></td><td>本番構築・テスト・公開・公開後の運用全般</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box" style="margin-top: 24px;">
+    <span class="label">最後に</span><br>
+    本資料は<strong>4/25打ち合わせの議論材料</strong>として作成しました。<br>
+    打ち合わせ中にこの資料を見ながら「ここはこう」「これは持ち帰り」と整理いただければ、その後すぐにv2へアップデートしてプロトタイプ構築に進めます。<br>
+    ご質問・修正依頼があればお気軽にお知らせください。
+  </div>
+</section>
+
+</main>
+
+</div>
+</body>
+</html>
